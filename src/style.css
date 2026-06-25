@@ -1,0 +1,505 @@
+:root {
+  --accent: #2563eb;
+  --border: #ddd;
+  --bg: #f6f6f6;
+  /* Single source of truth for the fixed header's height. Both the header
+     itself and the layout offset / sticky-preview calc()s derive from this. */
+  --header-height: 48px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: #222;
+}
+
+.app-header {
+  background: var(--accent);
+  color: #fff;
+  padding: 0 20px;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.layout {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  /* Offset for the fixed header so content isn't hidden underneath it. */
+  padding-top: calc(var(--header-height) + 16px);
+  align-items: flex-start;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.panel-left {
+  flex: 1 1 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-right {
+  flex: 1 1 50%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  position: sticky;
+  /* Sit just below the fixed header, and fill the rest of the viewport. */
+  top: calc(var(--header-height) + 16px);
+  height: calc(100vh - var(--header-height) - 32px);
+}
+
+#preview {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.section {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.section h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.greeting-section summary,
+.section > summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--accent);
+  padding: 4px 0;
+}
+
+.lang-pair {
+  margin-bottom: 12px;
+}
+
+.lang-label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 6px;
+}
+
+.lang-pair label:not(.lang-label) {
+  display: block;
+  font-size: 13px;
+  margin: 6px 0 2px;
+  color: #555;
+}
+
+input[type='text'] {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* The footer address is a plain <textarea>; match the text-input styling and
+   let the user grow it vertically. (The four EasyMDE editors are styled by
+   EasyMDE itself, so this only affects the footer address box.) */
+.lang-pair textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+
+.button-row button {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-row button:hover {
+  filter: brightness(0.92);
+}
+
+.button-row button.danger {
+  background: #fff;
+  color: var(--accent);
+}
+
+.button-row button.danger:hover {
+  background: #f4f4f4;
+  filter: none;
+}
+
+.toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toc-row {
+  display: flex;
+  gap: 6px;
+}
+
+.toc-row input[type='text'] {
+  flex: 1;
+}
+
+.toc-row button {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.toc-add {
+  margin-top: 6px;
+  border: 1px dashed var(--border);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.copy-feedback {
+  background: #2a8f4a !important;
+  border-color: #2a8f4a !important;
+}
+
+/* Buttons that emit the final HTML go yellow when an editor has a heading
+   problem (clicking still works — it just confirms first). */
+.button-row button.has-warning {
+  background: #e6b800;
+  border-color: #c49f00;
+  color: #3d3000;
+}
+
+.button-row button.has-warning:hover {
+  filter: brightness(0.95);
+}
+
+/* How does this work + Appearance collapsibles */
+.how-it-works,
+.appearance {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: #fafafa;
+}
+
+.how-it-works > summary,
+.appearance > summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.how-body {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.how-body ol {
+  padding-left: 20px;
+}
+
+.how-body code {
+  background: #eee;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.field-group {
+  margin-top: 12px;
+}
+
+.group-label {
+  display: block;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.lang-name-row {
+  display: flex;
+  gap: 10px;
+}
+
+.lang-name-row > div {
+  flex: 1;
+}
+
+.lang-name-row label {
+  display: block;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.hint {
+  font-size: 12px;
+  color: #777;
+  margin: 6px 0 0;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-row input[type='color'] {
+  width: 40px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.color-row input[type='text'] {
+  width: 110px;
+  font-family: monospace;
+}
+
+.contrast-badge {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.contrast-badge.pass {
+  background: #e3f5e9;
+  color: #1c6b3a;
+}
+
+.contrast-badge.warn {
+  background: #fff3da;
+  color: #8a5a00;
+}
+
+.contrast-badge.fail {
+  background: #fae3e3;
+  color: #a11;
+}
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.swatch.active {
+  border-color: #222;
+  box-shadow: 0 0 0 2px #fff inset;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.secondary-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* On narrow screens the preview joins normal page flow and expands to its
+     full content height (set dynamically in main.ts), so the whole email is
+     visible inline with no nested scrollbar. */
+  .panel-right {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  #preview {
+    height: auto;
+  }
+}
+
+.CodeMirror.heading-warning {
+  outline: 2px solid #e6b800;
+}
+
+/* Yellow hint shown directly below an editor that breaks the H2/H3-only rule. */
+.heading-hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #6b5300;
+  background: #fff8e1;
+  border: 1px solid #e6b800;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+/* Logo recolor / size / download tools */
+.logo-tools {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+.recolor-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.recolor-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.recolor-btn.active {
+  border-color: #222;
+  font-weight: bold;
+}
+
+.recolor-row input[type='color'] {
+  width: 36px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.logo-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.logo-size {
+  font-size: 12px;
+  color: #777;
+}
+
+.logo-size.over-advice {
+  color: #8a5a00;
+}
+
+/* EasyMDE fullscreen mode: its toolbar/editor/preview default to z-index 9,
+   which sits *behind* the fixed .app-header (z-index 10), hiding the toolbar
+   under the site header. Lift them above the header. */
+.editor-toolbar.fullscreen,
+.CodeMirror-fullscreen,
+.editor-preview-side {
+  z-index: 20 !important;
+}
+
+.md-instructions {
+  font-size: 13px;
+  color: #555;
+  background: #f9f9f9;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.md-instructions p {
+  margin: 4px 0;
+}
+
+.md-instructions code {
+  background: #eee;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.draft-feedback {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.draft-feedback.error {
+  color: #a11;
+}
+
+.site-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  padding: 16px;
+}
+
+.site-footer a {
+  color: var(--accent);
+}

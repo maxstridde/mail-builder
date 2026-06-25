@@ -1,0 +1,24 @@
+<svg width="680" height="228" viewBox="0 0 680 228" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Riverside Community Center – white</title>
+<desc>White single-colour masthead on transparent background.</desc>
+<line x1="40" y1="14" x2="640" y2="14" stroke="#ffffff" stroke-width="0.8"/>
+<text x="340" y="33" text-anchor="middle" font-family="Georgia,serif" font-size="24" font-weight="700" letter-spacing="5" fill="#ffffff">RIVERSIDE</text>
+<text x="340" y="50" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="400" letter-spacing="8" fill="#ffffff">COMMUNITY CENTER</text>
+<line x1="40" y1="57" x2="640" y2="57" stroke="#ffffff" stroke-width="0.8"/>
+<path fill="#ffffff" fill-rule="evenodd" d="M208,112 L340,68 L472,112 Z M328,90 A12,12 0 1,0 352,90 A12,12 0 1,0 328,90 Z"/>
+<path fill="#ffffff" fill-rule="evenodd" d="M225,112 H455 V182 H225 Z M316,152 A24,24 0 0,0 364,152 L364,182 L316,182 Z M248,122 H285 V146 H248 Z M395,122 H432 V146 H395 Z"/>
+<rect fill="#ffffff" x="220" y="182" width="240" height="6"/>
+<rect fill="#ffffff" x="213" y="188" width="254" height="6"/>
+<rect fill="#ffffff" x="206" y="194" width="268" height="6"/>
+<polygon fill="#ffffff" points="72,182 112,105 152,182"/>
+<rect fill="#ffffff" x="106" y="182" width="12" height="20"/>
+<polygon fill="#ffffff" points="140,182 168,128 196,182"/>
+<rect fill="#ffffff" x="162" y="182" width="10" height="20"/>
+<polygon fill="#ffffff" points="528,182 568,105 608,182"/>
+<rect fill="#ffffff" x="562" y="182" width="12" height="20"/>
+<polygon fill="#ffffff" points="484,182 512,128 540,182"/>
+<rect fill="#ffffff" x="506" y="182" width="10" height="20"/>
+<rect fill="#ffffff" x="65" y="200" width="550" height="5"/>
+<path fill="none" stroke="#ffffff" stroke-width="2.5" d="M40,212 Q100,208 160,212 Q220,216 280,212 Q340,208 400,212 Q460,216 520,212 Q580,208 640,212"/>
+<path fill="none" stroke="#ffffff" stroke-width="1.8" d="M40,220 Q100,216 160,220 Q220,224 280,220 Q340,216 400,220 Q460,224 520,220 Q580,216 640,220"/>
+</svg>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light">
+        <meta name="supported-color-schemes" content="light">
+        <title>Newsletter</title>
+        <style>
+            body {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            line-height: 1.5 !important;
+            background-color: #f3f3f3 !important;
+            font-family: Arial, sans-serif !important;
+            color: #000000 !important;
+            }
+            h1 {
+            font-size: 26px !important;
+            color: {{ACCENT}} !important;
+            margin-bottom: 10px !important;
+            }
+            h2 {
+            font-size: 24px !important;
+            color: {{ACCENT}} !important;
+            margin-bottom: 5px !important;
+            }
+            h3 {
+            font-size: 18px !important;
+            color: {{ACCENT}} !important;
+            margin-bottom: 5px !important;
+            }
+            h4 {
+            font-size: 18px !important;
+            color: {{ACCENT}} !important;
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
+            }
+            ul, li {
+            margin: 0 !important;
+            color: #000000 !important;
+            padding: 0 0 0 20px !important;
+            }
+            .main {
+            background-color: #ffffff !important;
+            border: 0 !important;
+            outline: 0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            }
+            .footer {
+            background-color:#111111 !important;
+            color:#cccccc !important;
+            text-align:center !important;
+            margin-top:20px !important;
+            }
+            .main a {
+            color: {{ACCENT}} !important;
+            text-decoration: none !important;
+            }
+            .footer a {
+            color: #cccccc !important;
+            text-decoration: underline !important;
+            }
+            .main-link {
+            color: {{ACCENT}} !important;
+            text-decoration: none !important;
+            }
+            .footer-link {
+            color: #cccccc !important;
+            text-decoration: underline !important;
+            }
+            @media (max-width:600px) {
+            table[class="main"] {
+            width: 90% !important;
+            }
+            td[class="content"] {
+            padding: 20px !important;
+            }
+            }
+        </style>
+    </head>
+    <body bgcolor="#f3f3f3" style="margin: 0; padding: 0; border: 0; outline: 0; background-color: #f3f3f3; font-family: Arial, sans-serif; line-height: 1.5; color: #000000;">
+        <!--[if mso]>
+        <style type="text/css">
+            body, table, td, div, p, a {
+            border: none !important;
+            background-color: #f3f3f3 !important;
+            }
+            body {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            background-color: #f3f3f3 !important;
+            }
+        </style>
+        <![endif]-->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f3f3f3"
+            style="margin:0; padding: 0; background-color: #f3f3f3">
+            <tr>
+                <td align="center" style="margin:0; padding: 0;">
+                    <!-- Header -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="{{ACCENT}}"
+                        style="background-color:{{ACCENT}}; color:#ffffff; margin:0;">
+                        <tr>
+                            <td align="center" style="padding:30px 10px;">
+                                {{LOGO}}
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Stripe -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="{{ACCENT}}"
+                        style="background-color:{{ACCENT}}; height:5px; opacity:0.85;">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <!-- Main Content -->
+                    <table role="presentation" class="main" width="90%" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff"
+                        style="max-width:600px; background-color:#ffffff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin:40px auto;">
+                        <tr>
+                            <td class="content" style="padding:30px; font-size:15px; line-height:1.6;">
+                                <!-- EDIT SecondaryNotice --><p style="text-align: right; font-size: 12px; margin-top: 0; margin-bottom: 0;"><em><!-- EDIT --></em></p><!-- SecondaryNotice End -->
+                                <h1 style="color:{{ACCENT}}; font-size:26px; margin-bottom:10px;"><!-- EDIT Title --><!-- EDIT --><!-- Title End --></h1>
+                                <!-- EDIT Greeting --><p><!-- EDIT --></p><!-- Greeting End -->
+                                <!-- EDIT Introduction --><!-- EDIT --><!-- Introduction End -->
+                                <!-- Table of Contents -->
+                                <table role="presentation" class="content-box" width="100%" cellspacing="0" cellpadding="0"
+                                    style="margin-top:30px; background-color:#eeeeee; border-left: 5px solid {{ACCENT}};">
+                                    <tr>
+                                        <td style="padding:5px 15px 5px 15px; font-size:14px;">
+                                            <h4 style="font-size:18px; color:{{ACCENT}}; margin-top:5px; margin-bottom:5px;"><!-- EDIT TocTitle --><!-- EDIT --><!-- TocTitle End --></h4>
+                                            <!-- EDIT TocList --><!-- EDIT --><!-- TocList End -->
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- EDIT Main --><!-- EDIT --><!-- Main End -->
+                                <p style="margin-top:30px; margin-bottom: 0;"><!-- EDIT FinalGreeting1 --><!-- EDIT --><!-- FinalGreeting1 End --></p>
+                                <p style="margin-top: 0; margin-bottom: 0;"><!-- EDIT FinalGreeting2 --><!-- EDIT --><!-- FinalGreeting2 End --></p>
+                                <!-- SECONDARY BLOCK START -->
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="{{ACCENT}}"
+                                    style="background-color:{{ACCENT}}; height:10px; margin-top: 20px; margin-bottom: 20px;">
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <h1 style="color:{{ACCENT}}; font-size:26px; margin-bottom:10px;"><!-- EDIT Title2 --><!-- EDIT --><!-- Title2 End --></h1>
+                                <!-- EDIT Greeting2 --><p><!-- EDIT --></p><!-- Greeting2 End -->
+                                <!-- EDIT Introduction2 --><!-- EDIT --><!-- Introduction2 End -->
+                                <table role="presentation" class="content-box" width="100%" cellspacing="0" cellpadding="0"
+                                    style="margin-top:30px; background-color:#eeeeee; border-left: 5px solid {{ACCENT}};">
+                                    <tr>
+                                        <td style="padding:5px 15px 5px 15px; font-size:14px;">
+                                            <h4 style="font-size:18px; color:{{ACCENT}}; margin-top:5px; margin-bottom:5px;"><!-- EDIT TocTitle2 --><!-- EDIT --><!-- TocTitle2 End --></h4>
+                                            <!-- EDIT TocList2 --><!-- EDIT --><!-- TocList2 End -->
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- EDIT Main2 --><!-- EDIT --><!-- Main2 End -->
+                                <p style="margin-top:30px; margin-bottom: 0;"><!-- EDIT FinalGreeting2-1 --><!-- EDIT --><!-- FinalGreeting2-1 End --></p>
+                                <p style="margin-top: 0; margin-bottom: 0;"><!-- EDIT FinalGreeting2-2 --><!-- EDIT --><!-- FinalGreeting2-2 End --></p>
+                                <!-- SECONDARY BLOCK END -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Footer -->
+                    <table role="presentation" class="footer" width="100%" cellspacing="0" cellpadding="0" bgcolor="#111111"
+                        style="background-color:#111111; color:#cccccc; text-align:center; margin-top:20px;">
+                        <tr>
+                            <td style="padding:20px; font-size:13px;">
+                                <p style="margin:0; color: #cccccc;"><!-- EDIT FooterAddress --><!-- EDIT --><!-- FooterAddress End --></p>
+                                <p>
+                                    <a href="{{FOOTER_EMAIL_HREF}}"
+                                        class="footer-link" style="color:#cccccc; text-decoration: underline;"><!-- EDIT FooterEmailText --><!-- EDIT --><!-- FooterEmailText End --></a>
+                                </p>
+                                <p style="margin-top:10px; color: #cccccc;">
+                                    <a href="{{FOOTER_MAILINGLIST_HREF}}"
+                                        class="footer-link" style="color: #cccccc; text-decoration: underline;"><!-- EDIT FooterMailinglistText --><!-- EDIT --><!-- FooterMailinglistText End --></a>
+                                </p>
+                                <p style="margin-top:10px; color: #cccccc;">
+                                    <!-- EDIT FooterUnsubscribeText --><!-- EDIT --><!-- FooterUnsubscribeText End --><br>
+                                    <a
+                                        href="{{FOOTER_UNSUBSCRIBE_HREF}}"
+                                        class="footer-link" style="color:#cccccc; text-decoration:underline;"><!-- EDIT FooterUnsubscribeLinkText --><!-- EDIT --><!-- FooterUnsubscribeLinkText End --></a>.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "mail-builder",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Free, browser-based builder that turns Markdown into ready-to-send, email-client-safe HTML newsletters.",
+  "license": "MIT",
+  "author": "Max Stridde",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxstridde/mail-builder"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "easymde": "latest",
+    "marked": "^12.0.0",
+    "wcag-contrast": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "vite": "latest"
+  }
+}
