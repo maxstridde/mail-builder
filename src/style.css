@@ -385,11 +385,16 @@ input[type='text'] {
     flex-direction: column;
     align-items: stretch;
   }
-  /* On narrow screens the preview joins normal page flow and expands to its
-     full content height (set dynamically in main.ts), so the whole email is
-     visible inline with no nested scrollbar. */
+  /* On narrow screens both panels stack full-width. */
+  .panel-left {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  /* The preview joins normal page flow and expands to its full content height
+     (set dynamically in main.ts), so the whole email is visible inline. */
   .panel-right {
     position: static;
+    width: 100%;
     height: auto;
     overflow: visible;
   }
