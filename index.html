@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mail Builder — free HTML newsletter builder</title>
+
+    <meta name="description" content="Write newsletter content in Markdown and produce a ready-to-copy, email-client-safe HTML newsletter. Free, no account, runs entirely in your browser." />
+    <link rel="canonical" href="https://maxstridde.de/mail-builder/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Max Stridde" />
+    <meta name="theme-color" content="#2563EB" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mail Builder" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Mail Builder — free HTML newsletter builder" />
+    <meta property="og:description" content="Write newsletter content in Markdown and produce a ready-to-copy, email-client-safe HTML newsletter. Free, no account, runs entirely in your browser." />
+    <meta property="og:url" content="https://maxstridde.de/mail-builder/" />
+    <meta property="og:image" content="https://maxstridde.de/mail-builder/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mail Builder — free HTML newsletter builder" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mail Builder — free HTML newsletter builder" />
+    <meta name="twitter:description" content="Write newsletter content in Markdown and produce a ready-to-copy, email-client-safe HTML newsletter. Free, no account, runs entirely in your browser." />
+    <meta name="twitter:image" content="https://maxstridde.de/mail-builder/og-image.png" />
+    <meta name="twitter:image:alt" content="Mail Builder — free HTML newsletter builder" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Mail Builder",
+        "description": "Write newsletter content in Markdown and produce a ready-to-copy, email-client-safe HTML newsletter. Free, no account, runs entirely in your browser.",
+        "url": "https://maxstridde.de/mail-builder/",
+        "image": "https://maxstridde.de/mail-builder/og-image.png",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "author": {
+          "@type": "Person",
+          "name": "Max Stridde"
+        },
+        "featureList": [
+          "Markdown to email-client-safe HTML",
+          "Live preview",
+          "Two-language newsletters",
+          "Custom accent color with WCAG contrast check",
+          "Embedded logo with single-color recolor",
+          "Export and import drafts",
+          "No account, runs entirely in the browser"
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="/mail-builder/assets/index-X_i5gXGA.js"></script>
+    <link rel="stylesheet" crossorigin href="/mail-builder/assets/index-D9F5W4XY.css">
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <h1>Mail Builder — free HTML newsletter builder</h1>
+      </header>
+
+      <div class="layout">
+        <div class="panel panel-left">
+          <div class="button-row">
+            <button id="copy-html-top" type="button">Copy HTML</button>
+            <button id="export-html-top" type="button">Export .html</button>
+            <button id="reset-all-top" type="button" class="danger">Reset / Clear all</button>
+          </div>
+
+          <details class="how-it-works">
+            <summary>How does this work?</summary>
+            <div class="how-body">
+              <p><strong>What this does:</strong> you write your newsletter on the left and get a finished, email-client-safe HTML email on the right. Click <strong>Copy HTML</strong> (or <strong>Export .html</strong>) and paste it into your mail program as the message body.</p>
+
+              <p><strong>Sending with Thunderbird (recommended):</strong></p>
+              <ol>
+                <li>Click <strong>Write</strong> to start a new message and fill in recipients + subject.</li>
+                <li><strong>Make sure the body is in normal text.</strong> Click into the message body and delete everything until the formatting dropdown (top-left of the body toolbar) reads <strong>“Body Text”</strong> / normal text — not a heading or preformatted style. Inserting into a heading or leftover style is the usual cause of a newsletter that pastes in looking wrong.</li>
+                <li>In the compose window menu, choose <strong>Insert ▸ HTML…</strong>.</li>
+                <li>Paste the copied HTML into the box and click <strong>Insert</strong>.</li>
+                <li>Thunderbird usually leaves an empty line (and your signature) <em>below</em> the inserted email. Click into that <strong>empty last row</strong>, press <strong>Enter</strong> once, then <strong>Delete</strong> twice to drop the unwanted trailing line.</li>
+                <li>Send as normal (send yourself a test first). If the paste didn't come out cleanly, clear the body and repeat these steps exactly.</li>
+              </ol>
+
+              <p><strong>Gmail, Outlook &amp; other clients:</strong> most webmail composers don't accept a raw-HTML paste. Two options that usually work: open the exported <code>newsletter.html</code> in your browser, select the rendered email, copy, and paste that into the compose window — or use your provider's "import / insert HTML" feature where available. When in doubt, send the <code>.html</code> file to a Thunderbird user, or use a newsletter service that lets you paste HTML source.</p>
+            </div>
+          </details>
+
+          <div class="md-instructions">
+            <p>Use only <strong>H2 (##)</strong> and <strong>H3 (###)</strong> headings — H1 is reserved for the newsletter title.</p>
+            <p>Links: <code>[link text](https://example.com)</code></p>
+          </div>
+
+          <details class="appearance" open>
+            <summary>Appearance</summary>
+
+            <div class="field-group">
+              <label class="group-label">Language names</label>
+              <div class="lang-name-row">
+                <div>
+                  <label for="lang1-name">Primary language</label>
+                  <input id="lang1-name" type="text" value="German" />
+                </div>
+                <div>
+                  <label for="lang2-name">Secondary language</label>
+                  <input id="lang2-name" type="text" value="English" />
+                </div>
+              </div>
+              <p class="hint">These names are shown as the tags on each section and in the toggle button.</p>
+            </div>
+
+            <div class="field-group">
+              <label class="group-label">Accent color</label>
+              <div class="color-row">
+                <input id="accent-color" type="color" value="#2563EB" />
+                <input id="accent-hex" type="text" value="#2563EB" spellcheck="false" />
+                <span id="contrast-badge" class="contrast-badge"></span>
+              </div>
+              <div id="palette" class="palette"></div>
+              <p class="hint">Used for the header bar, headings and links. Keep enough contrast against white for readable text — the badge above warns when it's too low.</p>
+            </div>
+
+            <div class="field-group">
+              <label class="group-label">Logo</label>
+              <div class="logo-row">
+                <input id="logo-file" type="file" accept="image/*" />
+                <button id="logo-sample" type="button" class="secondary-btn">Use sample logo</button>
+                <button id="logo-remove" type="button" class="secondary-btn">Remove image</button>
+              </div>
+              <p class="hint">Imported and embedded directly into the email (auto base64). The header bar uses your accent color, so a <strong>white logo on a transparent background usually looks best</strong>. Aim for ~20&nbsp;KB to keep the email small; max 100&nbsp;KB.</p>
+
+              <div id="logo-tools" class="logo-tools" hidden>
+                <label class="group-label">Recolor logo</label>
+                <div class="recolor-row">
+                  <button id="recolor-none" type="button" class="recolor-btn">Original</button>
+                  <button id="recolor-white" type="button" class="recolor-btn">White</button>
+                  <button id="recolor-black" type="button" class="recolor-btn">Black</button>
+                  <input id="recolor-color" type="color" value="#ffffff" title="Pick a custom recolor color" />
+                  <button id="recolor-custom" type="button" class="recolor-btn">Custom</button>
+                </div>
+                <p class="hint">Fills the logo's shape with a single color (transparency is kept) and re-exports it as PNG for the best email-client support.</p>
+                <div class="logo-meta">
+                  <span id="logo-size" class="logo-size"></span>
+                  <button id="logo-download" type="button" class="secondary-btn">Download image</button>
+                </div>
+              </div>
+
+              <label for="logo-text">Logo text (shown when no image is set)</label>
+              <input id="logo-text" type="text" />
+              <p class="hint">With no image and no logo text, the header shows no logo at all.</p>
+            </div>
+          </details>
+
+          <div class="button-row">
+            <button id="toggle-secondary" type="button">English: On</button>
+            <button id="load-sample" type="button">Load sample newsletter</button>
+          </div>
+          <div class="button-row">
+            <button id="export-draft" type="button">Export Draft</button>
+            <button id="import-draft" type="button">Import Draft</button>
+          </div>
+          <input id="import-draft-file" type="file" accept="application/json" hidden />
+          <p id="draft-feedback" class="draft-feedback" hidden></p>
+
+          <details class="section greeting-section">
+            <summary>Greeting</summary>
+
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Title">German — Title</label>
+              <input id="lang1-title" type="text" />
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Title">English — Title</label>
+              <input id="lang2-title" type="text" />
+            </div>
+            <div class="lang-pair secondary-only">
+              <label for="secondary-notice">Secondary-language notice (shown above the primary title)</label>
+              <input id="secondary-notice" type="text" />
+            </div>
+
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Greeting">German — Greeting</label>
+              <input id="lang1-greeting" type="text" />
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Greeting">English — Greeting</label>
+              <input id="lang2-greeting" type="text" />
+            </div>
+          </details>
+
+          <section class="section">
+            <h2>Introduction</h2>
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Introduction">German — Introduction</label>
+              <textarea id="lang1-intro"></textarea>
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Introduction">English — Introduction</label>
+              <textarea id="lang2-intro"></textarea>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Table of Contents</h2>
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Table of Contents">German — Table of Contents</label>
+              <input id="lang1-toc-title" type="text" />
+              <div id="lang1-toc-list" class="toc-list"></div>
+              <button id="lang1-toc-add" type="button" class="toc-add">+ Add item</button>
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Table of Contents">English — Table of Contents</label>
+              <input id="lang2-toc-title" type="text" />
+              <div id="lang2-toc-list" class="toc-list"></div>
+              <button id="lang2-toc-add" type="button" class="toc-add">+ Add item</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Main Text</h2>
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Main Text">German — Main Text</label>
+              <textarea id="lang1-main"></textarea>
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Main Text">English — Main Text</label>
+              <textarea id="lang2-main"></textarea>
+            </div>
+          </section>
+
+          <details class="section">
+            <summary>Final Greeting</summary>
+            <div class="lang-pair">
+              <label class="lang-label" data-lang="1" data-section="Final Greeting">German — Final Greeting</label>
+              <input id="lang1-final-greeting-1" type="text" />
+              <input id="lang1-final-greeting-2" type="text" />
+            </div>
+            <div class="lang-pair secondary-only">
+              <label class="lang-label" data-lang="2" data-section="Final Greeting">English — Final Greeting</label>
+              <input id="lang2-final-greeting-1" type="text" />
+              <input id="lang2-final-greeting-2" type="text" />
+            </div>
+          </details>
+
+          <details class="section">
+            <summary>Footer</summary>
+            <div class="lang-pair">
+              <label for="footer-address">Address</label>
+              <textarea id="footer-address" rows="3"></textarea>
+            </div>
+            <div class="lang-pair">
+              <label for="footer-email-text">Contact email — link text</label>
+              <input id="footer-email-text" type="text" />
+              <label for="footer-email-href">Contact email — mailto address</label>
+              <input id="footer-email-href" type="text" />
+            </div>
+            <div class="lang-pair">
+              <label for="footer-mailinglist-text">Website / info link — text</label>
+              <input id="footer-mailinglist-text" type="text" />
+              <label for="footer-mailinglist-href">Website / info link — URL</label>
+              <input id="footer-mailinglist-href" type="text" />
+            </div>
+            <div class="lang-pair">
+              <label for="footer-unsubscribe-text">Unsubscribe — lead text</label>
+              <input id="footer-unsubscribe-text" type="text" />
+              <label for="footer-unsubscribe-link-text">Unsubscribe — link text</label>
+              <input id="footer-unsubscribe-link-text" type="text" />
+              <label for="footer-unsubscribe-link-href">Unsubscribe — mailto / URL</label>
+              <input id="footer-unsubscribe-link-href" type="text" />
+            </div>
+          </details>
+
+          <div class="button-row">
+            <button id="copy-html-bottom" type="button">Copy HTML</button>
+            <button id="export-html-bottom" type="button">Export .html</button>
+          </div>
+
+          <div class="button-row">
+            <button id="reset-all" type="button" class="danger">Reset / Clear all</button>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <iframe id="preview" title="Email preview"></iframe>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <p id="site-footer-note"></p>
+      </footer>
+    </div>
+  </body>
+</html>
