@@ -105,31 +105,29 @@ function defaultState(): PersistedState {
 
 // A realistic fictional sample (single-language) for the "Load sample" button,
 // shown to demonstrate a finished newsletter out of the box.
-function sampleState(): Partial<PersistedState> {
-  return {
-    lang1Name: 'English',
-    secondaryEnabled: false,
-    accentColor: '#0F766E',
-    logoText: 'Riverside Community Center',
-    lang1Title: 'Riverside Community Center — June Update',
-    lang1Greeting: 'Hi neighbors,',
-    lang1Intro:
-      "Summer is here and we've got a packed month ahead — new classes, the community garden opening, and our annual block party. Read on for the highlights, and visit [our calendar](https://example.com) for everything else.",
-    lang1TocTitle: 'In this issue',
-    lang1Toc: ['Community garden opening', 'New summer classes', 'Annual block party'],
-    lang1Main:
-      '## Community garden opening\n\nOur garden beds are ready! Join us **Saturday, June 7 at 10:00** for the opening. Bring gloves — tools and seedlings are provided.\n\n## New summer classes\n\nRegistration is now open for:\n\n- Beginner pottery (Tuesdays)\n- Conversational Spanish (Wednesdays)\n- Family yoga (Sundays)\n\n[Sign up here](https://example.com).\n\n## Annual block party\n\nSave the date: **June 28, 4–8 pm** on Maple Street. Food, music, and games for all ages. Volunteers welcome — just reply to this email.',
-    lang1FinalGreeting1: 'See you around the center,',
-    lang1FinalGreeting2: 'The Riverside Community Center team',
-    footerAddress: 'Riverside Community Center\n42 Maple Street, Riverside',
-    footerEmailText: 'hello@riverside-cc.example',
-    footerEmailHref: 'mailto:hello@riverside-cc.example',
-    footerMailinglistText: 'Visit our website',
-    footerMailinglistHref: 'https://example.com',
-    footerUnsubscribeText: 'To stop receiving these emails, email us at',
-    footerUnsubscribeLinkText: 'unsubscribe@riverside-cc.example',
-    footerUnsubscribeLinkHref: 'mailto:unsubscribe@riverside-cc.example',
-  }
+const SAMPLE_STATE: Partial<PersistedState> = {
+  lang1Name: 'English',
+  secondaryEnabled: false,
+  accentColor: '#0F766E',
+  logoText: 'Riverside Community Center',
+  lang1Title: 'Riverside Community Center — June Update',
+  lang1Greeting: 'Hi neighbors,',
+  lang1Intro:
+    "Summer is here and we've got a packed month ahead — new classes, the community garden opening, and our annual block party. Read on for the highlights, and visit [our calendar](https://example.com) for everything else.",
+  lang1TocTitle: 'In this issue',
+  lang1Toc: ['Community garden opening', 'New summer classes', 'Annual block party'],
+  lang1Main:
+    '## Community garden opening\n\nOur garden beds are ready! Join us **Saturday, June 7 at 10:00** for the opening. Bring gloves — tools and seedlings are provided.\n\n## New summer classes\n\nRegistration is now open for:\n\n- Beginner pottery (Tuesdays)\n- Conversational Spanish (Wednesdays)\n- Family yoga (Sundays)\n\n[Sign up here](https://example.com).\n\n## Annual block party\n\nSave the date: **June 28, 4–8 pm** on Maple Street. Food, music, and games for all ages. Volunteers welcome — just reply to this email.',
+  lang1FinalGreeting1: 'See you around the center,',
+  lang1FinalGreeting2: 'The Riverside Community Center team',
+  footerAddress: 'Riverside Community Center\n42 Maple Street, Riverside',
+  footerEmailText: 'hello@riverside-cc.example',
+  footerEmailHref: 'mailto:hello@riverside-cc.example',
+  footerMailinglistText: 'Visit our website',
+  footerMailinglistHref: 'https://example.com',
+  footerUnsubscribeText: 'To stop receiving these emails, email us at',
+  footerUnsubscribeLinkText: 'unsubscribe@riverside-cc.example',
+  footerUnsubscribeLinkHref: 'mailto:unsubscribe@riverside-cc.example',
 }
 
 function escapeHtml(text: string): string {
@@ -166,21 +164,15 @@ function replaceSection(
   )
 }
 
-function replaceToken(html: string, token: string, value: string): string {
+// escape=true (default) HTML-escapes the value; pass false for raw HTML tokens like {{LOGO}}.
+function replaceToken(html: string, token: string, value: string, escape = true): string {
   if (!html.includes(token)) throw new Error(`Template token not found: ${token}`)
-  return html.replace(token, escapeHtml(value))
+  return html.replace(token, escape ? escapeHtml(value) : value)
 }
 
 // {{ACCENT}} appears many times (style block + inline styles); replace all.
 function replaceAccent(html: string, accent: string): string {
   return html.split('{{ACCENT}}').join(accent)
-}
-
-// {{LOGO}} carries HTML markup (an <img> or a placeholder), so it must NOT be
-// HTML-escaped, unlike replaceToken.
-function replaceLogo(html: string, markup: string): string {
-  if (!html.includes('{{LOGO}}')) throw new Error('Template token not found: {{LOGO}}')
-  return html.replace('{{LOGO}}', markup)
 }
 
 function stripRegion(html: string, startMarker: string, endMarker: string): string {
@@ -274,7 +266,7 @@ function assembleHtml(state: PersistedState): string {
   // Tokens
   // Use the (possibly recolored) render URL; fall back to the original while an
   // async recolor is still in flight so the logo never momentarily vanishes.
-  html = replaceLogo(html, buildLogo(logoRenderUrl || state.logoDataUrl, state.logoText))
+  html = replaceToken(html, '{{LOGO}}', buildLogo(logoRenderUrl || state.logoDataUrl, state.logoText), false)
   html = replaceToken(html, '{{FOOTER_EMAIL_HREF}}', state.footerEmailHref)
   html = replaceToken(html, '{{FOOTER_MAILINGLIST_HREF}}', state.footerMailinglistHref)
   html = replaceToken(html, '{{FOOTER_UNSUBSCRIBE_HREF}}', state.footerUnsubscribeLinkHref)
@@ -561,13 +553,10 @@ function recolorImage(srcDataUrl: string, color: string): Promise<string> {
   })
 }
 
-// Approximate decoded byte size of a base64 data URL.
+// Exact decoded byte size of a base64 data URL.
 function dataUrlBytes(url: string): number {
   const comma = url.indexOf(',')
-  if (comma === -1) return 0
-  const b64 = url.slice(comma + 1)
-  const padding = b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0
-  return Math.max(0, Math.floor((b64.length * 3) / 4) - padding)
+  return comma === -1 ? 0 : atob(url.slice(comma + 1)).length
 }
 
 function formatBytes(bytes: number): string {
@@ -801,13 +790,11 @@ const HEADING_HINT =
 // Per-editor warning state: the yellow hint shown below each editor, and
 // whether that editor currently has an invalid heading. Buttons that produce
 // the final HTML turn yellow when any editor is invalid.
-const editorHints = new Map<EasyMDE, HTMLElement>()
-const editorInvalid = new Map<EasyMDE, boolean>()
+const editors: { mde: EasyMDE; hint: HTMLElement; invalid: boolean }[] = []
 const warningButtons: HTMLButtonElement[] = []
 
 function anyHeadingInvalid(): boolean {
-  for (const invalid of editorInvalid.values()) if (invalid) return true
-  return false
+  return editors.some(e => e.invalid)
 }
 
 function updateWarningButtons(): void {
@@ -819,12 +806,12 @@ function checkHeadings(mde: EasyMDE): void {
   const content = mde.value()
   const invalid = H1_PATTERN.test(content) || H4_PLUS_PATTERN.test(content)
   mde.codemirror.getWrapperElement().classList.toggle('heading-warning', invalid)
-  const hint = editorHints.get(mde)
-  if (hint) {
-    hint.hidden = !invalid
-    if (invalid) hint.textContent = HEADING_HINT
+  const entry = editors.find(e => e.mde === mde)
+  if (entry) {
+    entry.hint.hidden = !invalid
+    if (invalid) entry.hint.textContent = HEADING_HINT
+    entry.invalid = invalid
   }
-  editorInvalid.set(mde, invalid)
   updateWarningButtons()
 }
 
@@ -898,7 +885,7 @@ async function importDraft(file: File): Promise<void> {
 }
 
 async function loadSample(): Promise<void> {
-  applyState({ ...defaultState(), ...sampleState() })
+  applyState({ ...defaultState(), ...SAMPLE_STATE })
   // The sample is "Riverside Community Center" — pair it with the bundled white
   // masthead so the demo shows a finished newsletter, logo and all.
   await loadSampleLogo()
@@ -935,8 +922,7 @@ function init(): void {
     hint.className = 'heading-hint'
     hint.hidden = true
     container?.after(hint)
-    editorHints.set(mde, hint)
-    editorInvalid.set(mde, false)
+    editors.push({ mde, hint, invalid: false })
 
     const scheduleHeadingCheck = debounce(() => checkHeadings(mde), HEADING_DEBOUNCE_MS)
     mde.codemirror.on('change', () => {
