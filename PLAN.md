@@ -1,131 +1,74 @@
-# Layout Fix Plan
+# Ponytail Audit — Cleanup Plan
 
-## Issues to fix
+Findings from the ponytail-audit of `src/main.ts`. Ranked by cut size.
+Status: ☐ pending · ✓ done
 
-### 1. Mobile — preview doesn't shrink when content gets shorter
+---
 
-**Root cause:** `scrollHeight` on an `<iframe>` document returns
-`max(content_height, frame_height)`. When the user toggles secondary language
-off, `updatePreview()` sets a new (shorter) `srcdoc`. The `onLoad` handler
-reads `doc.documentElement.scrollHeight` while the iframe still has the old
-*explicit* pixel height in its `style` attribute (left there by the previous
-call). Because `scrollHeight ≥ frame_height`, the browser reports the old
-(larger) height and the iframe stays tall even though the email is shorter.
+## 1. ☐ Merge parallel editor Maps into one array (`shrink`, ~8 lines)
 
-**Fix — `src/main.ts`, inside `updatePreview()`'s `onLoad` handler:**
+**Location:** `src/main.ts:804–829`
 
-Before reading `scrollHeight`, collapse the frame to zero height:
+`editorHints: Map<EasyMDE, HTMLElement>` and `editorInvalid: Map<EasyMDE, boolean>` are two
+parallel Maps for exactly 4 known editors. Replace with one array:
 
 ```ts
-previewIframe.style.height = '0px'                                 // collapse → scrollHeight = content height
-previewIframe.style.height = `${doc.documentElement.scrollHeight}px` // set true height
+const editors: { mde: EasyMDE; hint: HTMLElement; invalid: boolean }[] = []
 ```
 
-Setting height to `0px` synchronously (the browser performs a layout flush
-when `scrollHeight` is subsequently read) means the frame viewport is tiny,
-so `scrollHeight` equals the content's natural height, not a leftover frame
-height. No visible flash occurs because both assignments happen in the same
-JS microtask before paint.
+- `anyHeadingInvalid()` becomes `editors.some(e => e.invalid)`
+- `checkHeadings(mde)` finds its entry with `editors.find(e => e.mde === mde)`
+- Eliminates the double Map lookup and two module-level Map declarations
 
 ---
 
-### 2. Wide screen — preview panel should be truly fixed (never moves)
+## 2. ☐ Merge `replaceToken` + `replaceLogo` into one function (`shrink`, ~6 lines)
 
-**Current behaviour:** `.panel-right` is `position: sticky`. This keeps
-it inside the normal flex flow. While the element appears to stick, it will
-start to scroll away when the scrollable parent's extent ends — in our case
-there is no explicit parent height so it can behave unexpectedly, and more
-importantly the user specifically wants the panel to *never* move.
+**Location:** `src/main.ts:169–184`
 
-**Fix — `src/style.css`:**
+Both functions find a token and call `.replace(token, value)`. The only difference is
+that `replaceToken` HTML-escapes the value and `replaceLogo` does not. Merge:
 
-Change `.panel-right` to `position: fixed` and position it explicitly so
-it sits exactly where it used to:
-
-```css
-.panel-right {
-  position: fixed;
-  top: calc(var(--header-height) + 16px);   /* same as old `sticky top` */
-  right: 16px;                              /* flush with layout's right padding */
-  width: calc(50% - 24px);                 /* viewport-relative: 50vw − 24px */
-  height: calc(100vh - var(--header-height) - 32px);  /* same as before */
-  overflow: hidden;
-  padding: 0;
-  z-index: 5;  /* above normal content, below fixed .app-header (z-index 10) */
+```ts
+function replaceToken(html: string, token: string, value: string, escape = true): string {
+  if (!html.includes(token)) throw new Error(`Template token not found: ${token}`)
+  return html.replace(token, escape ? escapeHtml(value) : value)
 }
 ```
 
-Width derivation:
-- Layout has `padding: 16px` on both sides → available width = `100vw − 32px`
-- Gap between panels = `16px`
-- Each panel = `(100vw − 32px − 16px) / 2 = 50vw − 24px = calc(50% − 24px)`
-  (for a fixed element, `50%` resolves against the viewport, i.e. `50vw`)
-
-Because `.panel-right` is now out of the normal flow, `.panel-left` would
-expand to fill the whole layout container. Prevent that:
-
-```css
-.panel-left {
-  flex: 0 0 calc(50% - 8px);   /* 50% of layout container − half-gap = 50vw − 24px */
-  min-width: 0;
-}
-```
-
-Here `50%` is relative to the flex container (`100vw − 32px` layout padding),
-so `calc(50% − 8px) = 50vw − 16px − 8px = 50vw − 24px`. Both panels end up
-the same width.
-
-The `.panel` class already provides `background: #fff; border: 1px solid
-var(--border); border-radius: 8px`, so the fixed panel looks right without
-extra declarations.
+All existing `replaceToken(...)` call sites work unchanged. The two `replaceLogo` call
+sites become `replaceToken(html, '{{LOGO}}', markup, false)`.
 
 ---
 
-### 3. Footer — should appear only below the left editor column
+## 3. ☐ Replace hand-rolled base64 math in `dataUrlBytes` with `atob` (`stdlib`, ~4 lines)
 
-**Why this follows from fix #2 for free:**
+**Location:** `src/main.ts:565–571`
 
-With `.panel-right` as `position: fixed`, it leaves the normal document flow.
-The `.layout` flex container now only contains `.panel-left`. Its height
-equals the left panel's content height. The `<footer class="site-footer">`
-sits after `.layout` in the HTML, so it naturally appears below the left
-column only — no HTML changes needed.
+The manual padding calculation can be replaced with:
 
-The fixed right panel overlaps the right half of the viewport at z-index 5.
-If the left column is very short (footer scrolls into view while the fixed
-panel is still visible), the footer text's right portion would fall behind
-the panel. To keep things clean, constrain the footer to the left column
-width on wide screens:
-
-```css
-@media (min-width: 900px) {
-  .site-footer {
-    max-width: calc(50% - 8px);   /* mirror panel-left width in layout container */
-  }
+```ts
+function dataUrlBytes(url: string): number {
+  const comma = url.indexOf(',')
+  return comma === -1 ? 0 : atob(url.slice(comma + 1)).length
 }
 ```
 
-(On mobile the footer keeps its current full-width centered style.)
+`atob` returns the decoded string; `.length` is the exact byte count. Already available
+in every browser this app targets.
 
 ---
 
-## Files changed
+## 4. ☐ Convert `sampleState()` function to a plain const (`shrink`, ~2 lines)
 
-| File | Change |
-|---|---|
-| `src/style.css` | `.panel-right`: `sticky` → `fixed` + right/width; `.panel-left`: `flex: 0 0 calc(50% - 8px)`; footer max-width on wide screens |
-| `src/main.ts` | `onLoad` handler: reset iframe height to `0px` before reading `scrollHeight` |
+**Location:** `src/main.ts:108–133`
 
-## Mobile breakpoint (< 900 px)
+`sampleState()` is a zero-argument function that returns a new object literal with no
+closure over runtime values — it's effectively a constant. Replace:
 
-No structural changes. The existing media-query rules (`position: static;
-height: auto`) still apply to both panels. Only the `onLoad` height-reset
-(fix #1) touches mobile behaviour.
+```ts
+const SAMPLE_STATE: Partial<PersistedState> = { ... }
+```
 
-## What stays the same
+Call sites change from `sampleState()` to `SAMPLE_STATE`.
 
-- Fixed `.app-header` at z-index 10 — unchanged
-- `--header-height` CSS variable as the single source of truth — unchanged
-- EasyMDE editors, ToC lists, all input handling — unchanged
-- Draft export/import, localStorage persistence — unchanged
-- Preview scroll-position restore logic — unchanged
